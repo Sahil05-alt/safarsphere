@@ -70,10 +70,7 @@ function Globe({ mouse, mobile, quality }) {
         </points>
 
         {/* Invisible occluder: hides dots on the back of the globe, but the photo shows through */}
-        <mesh>
-          <sphereGeometry args={[0.985, 32, 32]} />
-          <meshBasicMaterial colorWrite={false} />
-        </mesh>
+      
 
         {cities.map((c, i) => (
           <mesh key={c.name} position={c.p} ref={(m) => (dots.current[i] = m)}>

@@ -6,7 +6,14 @@ export function getDevice() {
   const reduced = mq('(prefers-reduced-motion: reduce)');
   const lowEnd = (navigator.hardwareConcurrency || 8) <= 4;
   const webgl = hasWebGL();
-  return { isMobile, reduced, lowEnd, webgl, canUse3D: webgl && !reduced && !lowEnd, canHover: mq('(hover: hover) and (pointer: fine)') };
+  return {
+    isMobile,
+    reduced,
+    lowEnd,
+    webgl,
+    canUse3D: webgl && !reduced && !lowEnd,
+    canHover: mq('(hover: hover) and (pointer: fine)')
+  };
 }
 export default function useDevice() {
   const [d, setD] = useState(() => (typeof window === 'undefined' ? { canUse3D: false } : getDevice()));

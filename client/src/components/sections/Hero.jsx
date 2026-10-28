@@ -9,7 +9,8 @@ import Magnetic from '../ui/Magnetic';
 const HeroScene = lazy(() => import('../three/HeroScene'));
 
 export default function Hero() {
-  const { canUse3D, reduced } = useDevice();
+  const { canUse3D: has3D, reduced, isMobile } = useDevice();
+const canUse3D = has3D && !isMobile;
   const [wrap, inView] = useInView({ rootMargin: '0px' });
   const [idx, setIdx] = useState(0); const [previousIdx, setPreviousIdx] = useState(null); const [sceneReady, setSceneReady] = useState(false); const videoRef = useRef(null);
   const slideIndex = useRef(0); const fadeTimer = useRef(null);
@@ -58,7 +59,7 @@ export default function Hero() {
         ))}
       </motion.div>
       <div className="absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/30 to-bg" />
-      {canUse3D && inView && sceneReady && <Suspense fallback={null}><div className="absolute inset-0 z-[1] opacity-90"><HeroScene /></div></Suspense>}
+      {canUse3D && !isMobile && inView && sceneReady && <Suspense fallback={null}><div className="absolute inset-0 z-[1] opacity-90"><HeroScene /></div></Suspense>}
       <motion.div style={reduced ? {} : { opacity: fade }} className="relative z-10 container-x h-full flex flex-col justify-end pb-24 md:pb-28">
         <p className="eyebrow mb-5">Varanasi · Est. PLACEHOLDER</p>
         <h1 className="h-xl max-w-4xl">

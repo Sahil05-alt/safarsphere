@@ -1,0 +1,1 @@
+{ "name": "safar-sphere", "private": true, "scripts": { "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"", "install:all": "npm i && npm --prefix client i && npm --prefix server i" }, "devDependencies": { "concurrently": "^9.0.0" } }

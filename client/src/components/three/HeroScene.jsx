@@ -9,7 +9,6 @@ import useMouseParallax from '../../hooks/useMouseParallax';
 
 const GOLD = '#B49A6C';
 
-// Evenly spread points on a sphere = dotted globe
 function dottedSphere(n) {
   const a = new Float32Array(n * 3);
   const g = Math.PI * (3 - Math.sqrt(5));
@@ -37,13 +36,11 @@ function Globe({ mouse, mobile, quality }) {
     if (!g) return;
     g.rotation.y += dt * 0.08;
     const tx = mobile ? 0 : mouse.current.y * 0.25;
-    const ty = mobile ? 0 : mouse.current.x * 0.3;
     g.rotation.x += (tx + 0.3 - g.rotation.x) * 0.05;
     const t = s.clock.elapsedTime;
     dots.current.forEach((m, i) => {
       if (m) m.scale.setScalar(1 + Math.sin(t * 2 + i) * 0.35);
     });
-    g.userData.ty = ty;
   });
 
   const arcs = cities
@@ -59,18 +56,15 @@ function Globe({ mouse, mobile, quality }) {
     });
 
   return (
-    // Smaller on phones and moved up, so it sits above the headline
     <group position={[0, mobile ? 0.9 : 0, 0]} scale={mobile ? 0.7 : 1.4}>
       <group ref={group}>
+        {/* Dotted globe only. No solid sphere, so no black circle. */}
         <points>
           <bufferGeometry>
             <bufferAttribute attach="attributes-position" args={[pts, 3]} />
           </bufferGeometry>
           <pointsMaterial color={GOLD} size={0.012} transparent opacity={0.55} sizeAttenuation depthWrite={false} />
         </points>
-
-        {/* Invisible occluder: hides dots on the back of the globe, but the photo shows through */}
-      
 
         {cities.map((c, i) => (
           <mesh key={c.name} position={c.p} ref={(m) => (dots.current[i] = m)}>
